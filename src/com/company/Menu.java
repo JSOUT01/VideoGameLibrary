@@ -1,11 +1,14 @@
 package com.company;
 
+import com.company.Game.Library;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
 
     private Scanner input = new Scanner(System.in);
+    private Library library = new Library(this);
 
     //Menu to prompt users for Library options.
     public void startMenu () {
@@ -23,16 +26,31 @@ public class Menu {
 
             switch (input.nextInt()) {
                 case 1:
+                    input.nextLine();
                     // Add a game
+                    System.out.println("You have chosen to add a game");
+                    library.addGame();
                     break;
                 case 2:
+                    System.out.println("You have chosen to remove a game");
                     // Remove a game
+                    System.out.println("Which number would you like to remove?");
+                    library.listGamesInLibrary("forRemoval");
+                    library.removeGame(input.nextInt() - 1);
                     break;
                 case 3:
+                    input.nextLine();
                     // View what is currently in library
+                    library.listGamesInLibrary("inLibrary");
                     break;
                 case 4:
+                    input.nextLine();
                     // Check out a game
+                    System.out.println("You have chose to check out a game." +
+                            "\n Here is a list of all games available to check out.");
+                    library.listGamesInLibrary("checkOut");
+                    System.out.println("Choose a number for the game you like: ");
+                    library.checkOutGame(input.nextInt() - 1);
                     break;
                 case 5:
                     // Check in a game
@@ -46,7 +64,7 @@ public class Menu {
                     break;
                 default:
                     System.out.println("That is not a vailid entry. Please enter a number between 1 and 7.");
-                    startMenu()
+                    startMenu();
                     break;
 
 
@@ -56,6 +74,10 @@ public class Menu {
         } catch (InputMismatchException ime) {
             input.nextLine();
             System.out.println("That is not a vailid entry. Please enter a number between 1 and 7.");
+            startMenu();
+        } catch (IndexOutOfBoundsException Ioobe){
+            input.nextLine();
+            System.out.println("You have not entered a correct number. You will be sent back to the main menu");
             startMenu();
         }
     }

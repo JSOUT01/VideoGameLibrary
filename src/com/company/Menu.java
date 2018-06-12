@@ -11,7 +11,7 @@ public class Menu {
     private Library library = new Library(this);
 
     //Menu to prompt users for Library options.
-    public void startMenu () {
+    public void startMenu() {
 
         System.out.println("What would you like to do?" +
                 "\n1. Add a game to the Library" +
@@ -53,10 +53,15 @@ public class Menu {
                     library.checkOutGame(input.nextInt() - 1);
                     break;
                 case 5:
+                    input.nextLine();
                     // Check in a game
+                    System.out.println("What game are you checking in?");
+                    library.listCheckedOut("CheckIn");
+                    library.checkInGame(input.nextInt() - 1);
                     break;
                 case 6:
                     // View checked out games
+                    library.listCheckedOut("viewCheckedOut");
                     break;
                 case 7:
                     System.out.println("Thank you for using the Game Library Program");
@@ -68,14 +73,13 @@ public class Menu {
                     break;
 
 
-
             }
 
         } catch (InputMismatchException ime) {
             input.nextLine();
             System.out.println("That is not a vailid entry. Please enter a number between 1 and 7.");
             startMenu();
-        } catch (IndexOutOfBoundsException Ioobe){
+        } catch (IndexOutOfBoundsException Ioobe) {
             input.nextLine();
             System.out.println("You have not entered a correct number. You will be sent back to the main menu");
             startMenu();
